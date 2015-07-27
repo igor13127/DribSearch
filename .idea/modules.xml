@@ -2,9 +2,18 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/DribSearch-master.iml" filepath="$PROJECT_DIR$/DribSearch-master.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/DribSearch.iml" filepath="$PROJECT_DIR$/DribSearch.iml" />
+>>>>>>> a1ef637bda9111bebe683124e2672fe2cc2d4103
       <module fileurl="file://$PROJECT_DIR$/dribSearch/dribSearch.iml" filepath="$PROJECT_DIR$/dribSearch/dribSearch.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
     </modules>
   </component>
+<<<<<<< HEAD
 </project>
+=======
+</project>
+
+>>>>>>> a1ef637bda9111bebe683124e2672fe2cc2d4103
