@@ -134,12 +134,12 @@ public class DribSearchView extends View implements ValueAnimator.AnimatorUpdate
         defaultJoinx = (float)(rx + sin45 * r);
         defaultJoiny = (float)(ry + sin45 * r);
 
-        if (mState == SEARCH) {
+        if (getmState() == SEARCH) {
             joinAngle = DEFAULT_JOIN_ANGLE;
             joinx = 0;
             joiny = 0;
             lineDelx = drawRight - drawLeft;
-        } else if (mState == SEARCH) {
+        } else if (getmState() == SEARCH) {
             joinAngle  = DEGREE_360 + DEFAULT_JOIN_ANGLE;
             joinx = drawRight - defaultJoinx;
             joiny = drawBottom - defaultJoiny;
@@ -174,16 +174,24 @@ public class DribSearchView extends View implements ValueAnimator.AnimatorUpdate
         canvas.drawPath(mSearchPath, mSearchPaint);
     }
 
+    public State getmState() {
+        return mState;
+    }
+
+    public void setmState(State mState) {
+        this.mState = mState;
+    }
+
     public static enum State {
 
         RUNNING, SEARCH, LINE;
     }
 
-    State mState = SEARCH;
+    private State mState = SEARCH;
 
     public void toggle() {
 
-        switch (mState) {
+        switch (getmState()) {
             case RUNNING:
                 break;
             case SEARCH:
@@ -213,7 +221,7 @@ public class DribSearchView extends View implements ValueAnimator.AnimatorUpdate
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 float mx = event.getX();
                 float my = event.getY();
-                if (rect.contains(mx, my) && mClickSearchListener != null && mState == SEARCH) {
+                if (rect.contains(mx, my) && mClickSearchListener != null && getmState() == SEARCH) {
                     mClickSearchListener.onClickSearch();
                 }
             }
@@ -236,7 +244,7 @@ public class DribSearchView extends View implements ValueAnimator.AnimatorUpdate
     }
 
     public void changeLine() {
-        if (mState == LINE) return;
+        if (getmState() == LINE) return;
         ObjectAnimator round = ObjectAnimator.ofFloat(this, joinAngleProperty, DEFAULT_JOIN_ANGLE, DEGREE_360 + DEFAULT_JOIN_ANGLE);
         round.setDuration(450);
         round.addUpdateListener(this);
@@ -257,20 +265,20 @@ public class DribSearchView extends View implements ValueAnimator.AnimatorUpdate
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                mState = LINE;
-                mListener.onChange(mState);
+                setmState(LINE);
+                mListener.onChange(getmState());
             }
 
             @Override
             public void onAnimationStart(Animator animator) {
-                mState = RUNNING;
+                setmState(RUNNING);
             }
         });
         animatorSet.start();
     }
 
     public void changeSearch() {
-        if (mState == SEARCH) return;
+        if (getmState() == SEARCH) return;
         ObjectAnimator round = ObjectAnimator.ofFloat(this, joinAngleProperty, DEGREE_360 + DEFAULT_JOIN_ANGLE, DEFAULT_JOIN_ANGLE);
         round.setDuration(450);
         round.addUpdateListener(this);
@@ -292,13 +300,13 @@ public class DribSearchView extends View implements ValueAnimator.AnimatorUpdate
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                mState = SEARCH;
-                mListener.onChange(mState);
+                setmState(SEARCH);
+                mListener.onChange(getmState());
             }
 
             @Override
             public void onAnimationStart(Animator animator) {
-                mState = RUNNING;
+                setmState(RUNNING);
             }
         });
         animatorSet.start();
@@ -438,7 +446,7 @@ public class DribSearchView extends View implements ValueAnimator.AnimatorUpdate
         mClickSearchListener = l;
     }
 
-    @Override
+    /*@Override
     public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
         SavedState savedState = new SavedState(superState);
@@ -485,6 +493,7 @@ public class DribSearchView extends View implements ValueAnimator.AnimatorUpdate
 
         public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
             public SavedState createFromParcel(Parcel source) {
+                source.readParcelable(DribSearchView.class.getClassLoader());
                 return new SavedState(source);
             }
 
@@ -492,5 +501,5 @@ public class DribSearchView extends View implements ValueAnimator.AnimatorUpdate
                 return new SavedState[size];
             }
         };
-    }
+    }*/
 }
