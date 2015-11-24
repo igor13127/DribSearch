@@ -493,4 +493,8 @@ public class DribSearchView extends View implements ValueAnimator.AnimatorUpdate
             }
         };
     }
+
+    public State getmState(){
+        return mState;
+    }
 }
